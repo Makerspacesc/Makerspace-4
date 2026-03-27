@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Makerspace – Gesamte Website in einer Datei</title>
+
+<style>
+/* Farben */
+:root {
+    --beige-light: #f5f1e6;
+    --beige: #e9e1d2;
+    --brown: #6c5f4e;
+    --text-dark: #2b2b2b;
+}
+
+/* Grundlayout */
+body {
+    margin: 0;
+    font-family: "Inter", Arial, sans-serif;
+    background: var(--beige-light);
+    color: var(--text-dark);
+}
+
+/* Header */
+header {
+    background: var(--beige);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--brown);
+}
+
+nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: var(--brown);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Hero */
+.hero {
+    padding: 80px 20px;
+    text-align: center;
+    background: var(--beige);
+}
+
+/* Grid */
+.grid {
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border: 2px solid var(--brown);
+    border-radius: 8px;
+    color: var(--text-dark);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.card:hover {
+    background: var(--beige);
+}
+
+/* Content */
+.content {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-left: 5px solid var(--brown);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    background: var(--beige);
+    border-top: 3px solid var(--brown);
+}
+
+/* Seiten unsichtbar */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+</style>
+
+<script>
+// Einfache Seiten-Navigation
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    window.scrollTo(0, 0);
+}
+</script>
+
+</head>
+<body>
+
+<header>
+    <h1>Makerspace PWG</h1>
+    <nav>
+        <a onclick="showPage('startseite')">Startseite</a>
+        <a onclick="showPage('about')">Über den Makerspace</a>
+        <a onclick="showPage('angebote')">Angebote</a>
+        <a onclick="showPage('oeffnungszeiten')">Öffnungszeiten</a>
+        <a onclick="showPage('kontakt')">Kontakt</a>
+    </nav>
+</header>
+
+<!-- ============================= -->
+<!-- STARTSEITE -->
+<!-- ============================= -->
+<div id="startseite" class="page active">
+
+<section class="hero">
+    <h2>Willkommen im Makerspace PWG</h2>
+    <p>Der kreative Technikraum für Schülerinnen und Schüler.</p>
+</section>
+
+<section class="grid">
+
+    <div class="card" onclick="showPage('about')">
+        <h3>Über den Makerspace</h3>
+        <p>Mehr über unsere Vision.</p>
+    </div>
+
+    <div class="card" onclick="showPage('angebote')">
+        <h3>Angebote</h3>
+        <p>Workshops und Kurse.</p>
+    </div>
+
+    <div class="card" onclick="showPage('oeffnungszeiten')">
+        <h3>Öffnungszeiten</h3>
+        <p>Wann wir geöffnet haben.</p>
+    </div>
+
+    <div class="card" onclick="showPage('kontakt')">
+        <h3>Kontakt</h3>
+        <p>So erreichst du uns.</p>
+    </div>
+
+</section>
+
+</div>
+
+<!-- ============================= -->
+<!-- ÜBER UNS -->
+<!-- ============================= -->
+<div id="about" class="page">
+<section class="content">
+    <h2>Über den Makerspace</h2>
+    <p>
+        Der Makerspace ist ein Projekt am PWG, um Schülerinnen und Schülern dabei zu helfen,
+        ihre Kreativität zu fördern.<br><br>
+        Egal ob 3D-Druck, Holzverarbeitung oder Robotik – bei uns könnte das alles bald
+        möglich sein. Von Schülern und Lehrern, für Schüler!
+    </p>
+</section>
+</div>
+
+<!-- ============================= -->
+<!-- ANGEBOTE -->
+<!-- ============================= -->
+<div id="angebote" class="page">
+<section class="content">
+    <h2>Angebote</h2>
+    <p>
+        Wir bieten verschiedene Kurse und Workshops an:<br><br>
+        – Benutzung von Geräten und Maschinen<br>
+        – Herstellung von Materialien<br>
+        – Coding (Vibecoding)<br>
+        – Makergirl oder Makerboy<br><br>
+
+        Nach jedem Workshop erhält man ein Zertifikat, das zur Nutzung bestimmter Geräte
+        berechtigt.<br><br>
+
+        Nach Abschluss aller Workshops erhält man die <strong>Makercard</strong>, die zur
+        eigenständigen Nutzung aller Geräte berechtigt und dazu befähigt,
+        andere auszubilden.
+    </p>
+</section>
+</div>
+
+<!-- ============================= -->
+<!-- ÖFFNUNGSZEITEN -->
+<!-- ============================= -->
+<div id="oeffnungszeiten" class="page">
+<section class="content">
+    <h2>Öffnungszeiten</h2>
+    <p>
+        Die Öffnungszeiten variieren – jedoch hat der Makerspace jede Woche mindestens
+        zwei Nachmittage geöffnet.
+    </p>
+</section>
+</div>
+
+<!-- ============================= -->
+<!-- KONTAKT -->
+<!-- ============================= -->
+<div id="kontakt" class="page">
+<section class="content">
+    <h2>Kontakt</h2>
+    <p>
+        Ihr könnt uns jederzeit erreichen unter:<br>
+        <strong>Makerspace@makerpeople.test</strong><br><br>
+        Sprecht uns auf dem Gang an oder werft einen Brief in den Makerspace-Briefkasten ein.
+    </p>
+</section>
+</div>
+
+<footer>
+    © 2026 Makerspace PWG
+</footer>
+
+</body>
+</html>
