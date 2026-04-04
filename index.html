@@ -1,233 +1,393 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Makerspace – Gesamte Website in einer Datei</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Makerspace PWG — Startseite</title>
+  <meta name="description" content="Makerspace PWG – Kreativer Technikraum für Schülerinnen und Schüler. Workshops, Projekte, Öffnungszeiten und Kontakt." />
 
-<style>
-/* Farben */
-:root {
-    --beige-light: #f5f1e6;
-    --beige: #e9e1d2;
-    --brown: #6c5f4e;
-    --text-dark: #2b2b2b;
-}
+  <!-- Schrift -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-/* Grundlayout */
-body {
-    margin: 0;
-    font-family: "Inter", Arial, sans-serif;
-    background: var(--beige-light);
-    color: var(--text-dark);
-}
+  <style>
+    /* ------------------------------
+       Farbpalette Blau
+    --------------------------------*/
+    :root{
+      --blue-50: #f2f7ff;
+      --blue-100: #e6f0ff;
+      --blue-200: #c9dcff;
+      --blue-400: #6b93e6;
+      --blue-600: #2a4b8d;
+      --accent: #1e6fe6;
+      --text: #0f1724;
+      --muted: #6b7280;
+      --max-width: 1100px;
+    }
 
-/* Header */
-header {
-    background: var(--beige);
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 3px solid var(--brown);
-}
+    /* ------------------------------
+       Reset & Grund
+    --------------------------------*/
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--text);
+      background: linear-gradient(180deg,var(--blue-50),#fff 40%);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      scroll-behavior:smooth;
+    }
+    .wrap{max-width:var(--max-width);margin:0 auto;padding:0 20px;}
 
-nav a {
-    margin-left: 20px;
-    text-decoration: none;
-    color: var(--brown);
-    font-weight: bold;
-    cursor: pointer;
-}
+    /* ------------------------------
+       Header Sticky mit Nav
+    --------------------------------*/
+    header{
+      position:sticky;top:0;z-index:40;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.45));
+      border-bottom: 1px solid rgba(42,75,141,0.08);
+    }
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:14px 0;}
+    .brand{display:flex;align-items:center;gap:.75rem}
+    .logo{
+      width:48px;height:48px;border-radius:8px;
+      background: linear-gradient(135deg,var(--blue-200),var(--blue-400));
+      display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;
+      box-shadow:0 6px 18px rgba(42,75,141,0.12);
+    }
+    .brand h1{font-size:1rem;margin:0;font-weight:800}
+    .brand p{margin:0;font-size:.8rem;color:var(--muted)}
 
-nav a:hover {
-    text-decoration: underline;
-}
+    nav{display:flex;gap:.5rem;align-items:center}
+    .nav-link{
+      padding:.5rem .75rem;border-radius:8px;text-decoration:none;color:var(--blue-600);font-weight:600;
+      transition:all .18s ease;cursor:pointer;font-size:.95rem;
+    }
+    .nav-link:hover{background:rgba(42,75,141,0.06)}
+    .nav-link.active{
+      background:linear-gradient(90deg,var(--blue-200),var(--blue-100));
+      box-shadow:0 6px 18px rgba(42,75,141,0.06);
+      color:var(--blue-600);
+    }
+    .cta{
+      background:var(--accent);color:#fff;padding:.5rem .8rem;border-radius:10px;font-weight:700;
+      box-shadow:0 8px 20px rgba(30,111,230,0.12);text-decoration:none;
+    }
 
-/* Hero */
-.hero {
-    padding: 80px 20px;
-    text-align: center;
-    background: var(--beige);
-}
+    /* ------------------------------
+       Hero Bereich
+    --------------------------------*/
+    .hero{
+      display:grid;gap:1.25rem;align-items:center;padding:64px 0 48px;
+      grid-template-columns:1fr;
+    }
+    .hero-inner{display:flex;flex-direction:column;gap:.75rem;align-items:flex-start}
+    .kicker{font-weight:600;color:var(--blue-600);font-size:.95rem}
+    .hero-title{font-size:2.1rem;margin:0;line-height:1.05;font-weight:800}
+    .hero-sub{font-size:1.05rem;color:var(--muted);font-style:italic;margin:0}
+    .hero-actions{margin-top:12px;display:flex;gap:.6rem;align-items:center}
 
-/* Grid */
-.grid {
-    display: grid;
-    gap: 20px;
-    padding: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
+    /* ------------------------------
+       Sektionen (Rubriken)
+    --------------------------------*/
+    section.rubrik{
+      padding:64px 0;
+      scroll-margin-top:84px; /* für Hash-Links */
+    }
+    .section-inner{display:grid;grid-template-columns:1fr;gap:20px;align-items:start}
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
 
-.card {
-    background: white;
-    padding: 20px;
-    border: 2px solid var(--brown);
-    border-radius: 8px;
-    color: var(--text-dark);
-    text-decoration: none;
-    cursor: pointer;
-}
+    .card{
+      background:#fff;border-radius:12px;padding:18px;border-left:6px solid var(--blue-600);
+      box-shadow:0 8px 24px rgba(15,23,36,0.04);transition:transform .18s ease,box-shadow .18s ease;
+    }
+    .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(15,23,36,0.06)}
+    .card h3{margin:0 0 .5rem;font-size:1.05rem;font-weight:700}
+    .card p{margin:0;color:var(--muted)}
 
-.card:hover {
-    background: var(--beige);
-}
+    /* Typografie-Variationen */
+    .lead{font-size:1.05rem;font-weight:600}
+    .muted{color:var(--muted)}
+    .italic{font-style:italic}
+    .big{font-size:1.25rem;font-weight:800}
+    .small{font-size:.9rem;color:var(--muted)}
 
-/* Content */
-.content {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background: white;
-    border-left: 5px solid var(--brown);
-}
+    /* ------------------------------
+       Kontakt Karte und Footer
+    --------------------------------*/
+    .contact-card{display:flex;flex-direction:column;gap:.6rem;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fff,#f7fbff);border:1px solid rgba(42,75,141,0.06)}
+    .contact-card a{color:var(--blue-600);font-weight:700;text-decoration:none}
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    background: var(--beige);
-    border-top: 3px solid var(--brown);
-}
+    footer{padding:28px 0;border-top:1px solid rgba(42,75,141,0.06);margin-top:40px;color:var(--muted);font-size:.95rem;text-align:center}
 
-/* Seiten unsichtbar */
-.page {
-    display: none;
-}
+    /* ------------------------------
+       Responsive
+    --------------------------------*/
+    @media(min-width:900px){
+      .hero{grid-template-columns:1fr 420px}
+      .hero-title{font-size:2.6rem}
+      .section-inner{grid-template-columns:1fr 360px}
+    }
+    @media(max-width:520px){
+      .hero-title{font-size:1.6rem}
+      .brand h1{font-size:.95rem}
+      .nav-link{font-size:.9rem;padding:.4rem .6rem}
+    }
 
-.page.active {
-    display: block;
-}
-</style>
-
-<script>
-// Einfache Seiten-Navigation
-function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-    window.scrollTo(0, 0);
-}
-</script>
-
+    /* ------------------------------
+       Reveal Animation (prefers-reduced-motion)
+    --------------------------------*/
+    .reveal{opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.visible{opacity:1;transform:none}
+    @media (prefers-reduced-motion: reduce){
+      .reveal{transition:none}
+    }
+  </style>
 </head>
 <body>
 
-<header>
-    <h1>Makerspace PWG</h1>
-    <nav>
-        <a onclick="showPage('startseite')">Startseite</a>
-        <a onclick="showPage('about')">Über den Makerspace</a>
-        <a onclick="showPage('angebote')">Angebote</a>
-        <a onclick="showPage('oeffnungszeiten')">Öffnungszeiten</a>
-        <a onclick="showPage('kontakt')">Kontakt</a>
-    </nav>
-</header>
+  <header>
+    <div class="wrap header-inner" role="banner" aria-label="Hauptnavigation">
+      <div class="brand" aria-hidden="false">
+        <div class="logo" aria-hidden="true">MS</div>
+        <div>
+          <h1>Makerspace PWG</h1>
+          <p class="small">Kreativ. Technisch. Gemeinsam.</p>
+        </div>
+      </div>
 
-<!-- ============================= -->
-<!-- STARTSEITE -->
-<!-- ============================= -->
-<div id="startseite" class="page active">
-
-<section class="hero">
-    <h2>Willkommen im Makerspace PWG</h2>
-    <p>Der kreative Technikraum für Schülerinnen und Schüler.</p>
-</section>
-
-<section class="grid">
-
-    <div class="card" onclick="showPage('about')">
-        <h3>Über den Makerspace</h3>
-        <p>Mehr über unsere Vision.</p>
+      <nav role="navigation" aria-label="Sektionen">
+        <!-- data-target entspricht id der Sektion -->
+        <a class="nav-link active" data-target="start" href="#start">Start</a>
+        <a class="nav-link" data-target="about" href="#about">Über uns</a>
+        <a class="nav-link" data-target="angebote" href="#angebote">Angebote</a>
+        <a class="nav-link" data-target="oeffnungszeiten" href="#oeffnungszeiten">Öffnungszeiten</a>
+        <a class="nav-link" data-target="kontakt" href="#kontakt">Kontakt</a>
+        <a class="cta" href="#kontakt">Jetzt kontaktieren</a>
+      </nav>
     </div>
+  </header>
 
-    <div class="card" onclick="showPage('angebote')">
-        <h3>Angebote</h3>
-        <p>Workshops und Kurse.</p>
-    </div>
+  <main class="wrap" id="maincontent">
+    <!-- HERO -->
+    <section id="start" class="rubrik" aria-labelledby="start-title">
+      <div class="hero">
+        <div class="hero-inner reveal">
+          <div class="kicker">Willkommen</div>
+          <h2 id="start-title" class="hero-title">Makerspace PWG — Raum für Ideen und Technik</h2>
+          <p class="hero-sub italic">Ein Ort, an dem Schülerinnen und Schüler mit Werkzeugen, Elektronik und Software experimentieren.</p>
 
-    <div class="card" onclick="showPage('oeffnungszeiten')">
-        <h3>Öffnungszeiten</h3>
-        <p>Wann wir geöffnet haben.</p>
-    </div>
+          <div class="hero-actions">
+            <a class="cta" href="#angebote">Angebote ansehen</a>
+            <a class="nav-link" href="#about">Mehr erfahren</a>
+          </div>
+        </div>
 
-    <div class="card" onclick="showPage('kontakt')">
-        <h3>Kontakt</h3>
-        <p>So erreichst du uns.</p>
-    </div>
+        <aside class="card reveal" aria-labelledby="quick-info">
+          <h3 id="quick-info" class="big">Kurzinfo</h3>
+          <p class="muted">Workshops, offene Werkstatt, Projektbetreuung und Zertifikate.</p>
+          <p class="small"><strong>Makercard</strong> nach Abschluss aller Workshops.</p>
+        </aside>
+      </div>
+    </section>
 
-</section>
+    <!-- ÜBER UNS -->
+    <section id="about" class="rubrik" aria-labelledby="about-title">
+      <div class="section-inner">
+        <div class="reveal">
+          <h2 id="about-title">Über den Makerspace</h2>
+          <p class="lead italic">Unsere Mission ist es, Neugier zu wecken und technische Kompetenzen praktisch zu vermitteln.</p>
 
-</div>
+          <div class="card-grid" style="margin-top:16px">
+            <article class="card reveal">
+              <h3>Vision</h3>
+              <p>Ein offener Raum, in dem Ideen wachsen und Schüler*innen selbstständig Projekte realisieren.</p>
+            </article>
 
-<!-- ============================= -->
-<!-- ÜBER UNS -->
-<!-- ============================= -->
-<div id="about" class="page">
-<section class="content">
-    <h2>Über den Makerspace</h2>
-    <p>
-        Der Makerspace ist ein Projekt am PWG, um Schülerinnen und Schülern dabei zu helfen,
-        ihre Kreativität zu fördern.<br><br>
-        Egal ob 3D-Druck, Holzverarbeitung oder Robotik – bei uns könnte das alles bald
-        möglich sein. Von Schülern und Lehrern, für Schüler!
-    </p>
-</section>
-</div>
+            <article class="card reveal">
+              <h3>Team</h3>
+              <p>Lehrkräfte und engagierte Schüler*innen begleiten Workshops und Projekte.</p>
+            </article>
 
-<!-- ============================= -->
-<!-- ANGEBOTE -->
-<!-- ============================= -->
-<div id="angebote" class="page">
-<section class="content">
-    <h2>Angebote</h2>
-    <p>
-        Wir bieten verschiedene Kurse und Workshops an:<br><br>
-        – Benutzung von Geräten und Maschinen<br>
-        – Herstellung von Materialien<br>
-        – Coding (Vibecoding)<br>
-        – Makergirl oder Makerboy<br><br>
+            <article class="card reveal">
+              <h3>Ausstattung</h3>
+              <p>3D-Drucker, Laser, Holzwerkstatt, Elektronik-Arbeitsplätze und Software-Stationen.</p>
+            </article>
+          </div>
+        </div>
 
-        Nach jedem Workshop erhält man ein Zertifikat, das zur Nutzung bestimmter Geräte
-        berechtigt.<br><br>
+        <aside class="reveal">
+          <div class="card contact-card">
+            <strong>Kurzkontakt</strong>
+            <a href="mailto:Makerspace@makerpeople.test">Makerspace@makerpeople.test</a>
+            <div class="small muted">Oder sprich uns persönlich an — wir sind offen für Ideen.</div>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-        Nach Abschluss aller Workshops erhält man die <strong>Makercard</strong>, die zur
-        eigenständigen Nutzung aller Geräte berechtigt und dazu befähigt,
-        andere auszubilden.
-    </p>
-</section>
-</div>
+    <!-- ANGEBOTE -->
+    <section id="angebote" class="rubrik" aria-labelledby="angebote-title">
+      <div class="section-inner">
+        <div>
+          <h2 id="angebote-title">Angebote</h2>
+          <p class="lead">Workshops und Kurse für Einsteiger und Fortgeschrittene.</p>
 
-<!-- ============================= -->
-<!-- ÖFFNUNGSZEITEN -->
-<!-- ============================= -->
-<div id="oeffnungszeiten" class="page">
-<section class="content">
-    <h2>Öffnungszeiten</h2>
-    <p>
-        Die Öffnungszeiten variieren – jedoch hat der Makerspace jede Woche mindestens
-        zwei Nachmittage geöffnet.
-    </p>
-</section>
-</div>
+          <div class="card-grid" style="margin-top:16px">
+            <article class="card reveal">
+              <h3>Einsteigerkurse</h3>
+              <p>Grundlagen 3D-Druck, Einführung in Elektronik und einfache Holzprojekte.</p>
+            </article>
 
-<!-- ============================= -->
-<!-- KONTAKT -->
-<!-- ============================= -->
-<div id="kontakt" class="page">
-<section class="content">
-    <h2>Kontakt</h2>
-    <p>
-        Ihr könnt uns jederzeit erreichen unter:<br>
-        <strong>Makerspace@makerpeople.test</strong><br><br>
-        Sprecht uns auf dem Gang an oder werft einen Brief in den Makerspace-Briefkasten ein.
-    </p>
-</section>
-</div>
+            <article class="card reveal">
+              <h3>Vertiefung</h3>
+              <p>Robotik, CAD-Design, Lasergravur und fortgeschrittene Elektronik.</p>
+            </article>
 
-<footer>
-    © 2026 Makerspace PWG
-</footer>
+            <article class="card reveal">
+              <h3>Zertifikate</h3>
+              <p>Nach Abschluss bestimmter Module gibt es Zertifikate und die Makercard.</p>
+            </article>
+          </div>
+        </div>
 
+        <aside>
+          <div class="card contact-card reveal">
+            <h3 class="small">Nächster Workshop</h3>
+            <p class="muted">Termine werden regelmäßig im Schulkalender veröffentlicht.</p>
+            <a class="nav-link" href="#kontakt">Anmelden</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ÖFFNUNGSZEITEN -->
+    <section id="oeffnungszeiten" class="rubrik" aria-labelledby="oeffnungszeiten-title">
+      <div class="section-inner">
+        <div class="reveal">
+          <h2 id="oeffnungszeiten-title">Öffnungszeiten</h2>
+          <p class="lead italic">Der Makerspace ist wöchentlich an mindestens zwei Nachmittagen geöffnet.</p>
+
+          <div class="card" style="margin-top:12px">
+            <h3>Regelmäßige Zeiten</h3>
+            <p class="muted">Montag 15:00–17:30; Donnerstag 14:30–17:00; zusätzliche Termine nach Ankündigung.</p>
+          </div>
+        </div>
+
+        <aside class="reveal">
+          <div class="card contact-card">
+            <strong>Besuch planen</strong>
+            <p class="small muted">Schreib uns eine Mail oder komm während der Öffnungszeiten vorbei.</p>
+            <a href="#kontakt" class="nav-link">Kontakt</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- KONTAKT -->
+    <section id="kontakt" class="rubrik" aria-labelledby="kontakt-title">
+      <div class="section-inner">
+        <div class="reveal">
+          <h2 id="kontakt-title">Kontakt</h2>
+          <p class="lead">So erreichst du uns</p>
+
+          <div class="card" style="margin-top:12px">
+            <h3>Schreib uns</h3>
+            <p><strong>Email</strong> <a href="mailto:Makerspace@makerpeople.test">Makerspace@makerpeople.test</a></p>
+            <p><strong>Telefon</strong> <span class="muted">+49 123 456 789</span></p>
+            <p class="small italic muted">Oder sprich uns in der Schule an — wir freuen uns auf Projekte.</p>
+          </div>
+        </div>
+
+        <aside class="reveal">
+          <div class="card contact-card">
+            <strong>Adresse</strong>
+            <p class="small muted">PWG Schule, Makerspace Raum</p>
+            <a class="nav-link" href="#start">Zurück nach oben</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <footer>
+      © 2026 Makerspace PWG — Alle Rechte vorbehalten
+    </footer>
+  </main>
+
+  <script>
+    // Smooth scroll + ScrollSpy + Reveal
+    (function(){
+      const navLinks = document.querySelectorAll('.nav-link[data-target]');
+      const sections = Array.from(navLinks).map(a => document.getElementById(a.getAttribute('data-target')));
+      const revealEls = document.querySelectorAll('.reveal');
+
+      // Helper: set active nav link
+      function setActiveById(id){
+        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('data-target') === id));
+      }
+
+      // On click: smooth scroll handled by browser via href; ensure focus for accessibility
+      navLinks.forEach(a => {
+        a.addEventListener('click', (e) => {
+          // allow default anchor behavior; but ensure focus and close mobile menus if any
+          const targetId = a.getAttribute('data-target');
+          const el = document.getElementById(targetId);
+          if(el){
+            el.scrollIntoView({behavior:'smooth',block:'start'});
+            el.setAttribute('tabindex','-1');
+            el.focus({preventScroll:true});
+            setTimeout(()=>el.removeAttribute('tabindex'),800);
+          }
+          // prevent default jump if href present
+          e.preventDefault();
+        });
+      });
+
+      // IntersectionObserver for ScrollSpy and reveal animations
+      const ioOptions = {root:null,rootMargin:'-20% 0px -40% 0px',threshold:0};
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            const id = entry.target.id;
+            setActiveById(id);
+          }
+        });
+      }, ioOptions);
+
+      // Observe main sections
+      document.querySelectorAll('section.rubrik').forEach(sec => observer.observe(sec));
+
+      // Reveal observer
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if(e.isIntersecting){
+            e.target.classList.add('visible');
+            revealObserver.unobserve(e.target);
+          }
+        });
+      }, {root:null,threshold:0.12});
+
+      revealEls.forEach(el => revealObserver.observe(el));
+
+      // On load: if URL has hash, scroll to it
+      window.addEventListener('load', () => {
+        if(location.hash){
+          const id = location.hash.replace('#','');
+          const el = document.getElementById(id);
+          if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      });
+
+      // Accessibility: keyboard navigation for nav links
+      document.addEventListener('keydown', (e) => {
+        if(e.key === 'Home'){ e.preventDefault(); document.getElementById('start').scrollIntoView({behavior:'smooth'}); }
+        if(e.key === 'End'){ e.preventDefault(); document.getElementById('kontakt').scrollIntoView({behavior:'smooth'}); }
+      });
+    })();
+  </script>
 </body>
 </html>
